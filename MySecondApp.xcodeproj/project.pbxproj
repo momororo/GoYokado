@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A40D772919094A040043B9C4 /* yokado_logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A40D772719094A040043B9C4 /* yokado_logo.jpg */; };
+		A40D772A19094A040043B9C4 /* tap_yokado_logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A40D772819094A040043B9C4 /* tap_yokado_logo.jpg */; };
+		A40D772D19094AC80043B9C4 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A40D772C19094AC80043B9C4 /* MapViewController.m */; };
 		A4231C6A18E1C8FA00F4DEDE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4231C6918E1C8FA00F4DEDE /* Foundation.framework */; };
 		A4231C6C18E1C8FA00F4DEDE /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4231C6B18E1C8FA00F4DEDE /* CoreGraphics.framework */; };
 		A4231C6E18E1C8FA00F4DEDE /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4231C6D18E1C8FA00F4DEDE /* UIKit.framework */; };
@@ -21,8 +24,6 @@
 		A4231C8B18E1C8FA00F4DEDE /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4231C6D18E1C8FA00F4DEDE /* UIKit.framework */; };
 		A4231C9318E1C8FA00F4DEDE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A4231C9118E1C8FA00F4DEDE /* InfoPlist.strings */; };
 		A4231C9518E1C8FA00F4DEDE /* MySecondAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A4231C9418E1C8FA00F4DEDE /* MySecondAppTests.m */; };
-		A4231CA018E1CD9A00F4DEDE /* image1.png in Resources */ = {isa = PBXBuildFile; fileRef = A4231C9E18E1CD9A00F4DEDE /* image1.png */; };
-		A4231CA118E1CD9A00F4DEDE /* image2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A4231C9F18E1CD9A00F4DEDE /* image2.jpg */; };
 		A4231CA318E1CF2000F4DEDE /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4231CA218E1CF2000F4DEDE /* MapKit.framework */; };
 /* End PBXBuildFile section */
 
@@ -37,6 +38,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A40D772719094A040043B9C4 /* yokado_logo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = yokado_logo.jpg; sourceTree = "<group>"; };
+		A40D772819094A040043B9C4 /* tap_yokado_logo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = tap_yokado_logo.jpg; sourceTree = "<group>"; };
+		A40D772B19094AC80043B9C4 /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
+		A40D772C19094AC80043B9C4 /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
 		A4231C6618E1C8FA00F4DEDE /* MySecondApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MySecondApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A4231C6918E1C8FA00F4DEDE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		A4231C6B18E1C8FA00F4DEDE /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -56,8 +61,6 @@
 		A4231C9018E1C8FA00F4DEDE /* MySecondAppTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MySecondAppTests-Info.plist"; sourceTree = "<group>"; };
 		A4231C9218E1C8FA00F4DEDE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		A4231C9418E1C8FA00F4DEDE /* MySecondAppTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MySecondAppTests.m; sourceTree = "<group>"; };
-		A4231C9E18E1CD9A00F4DEDE /* image1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = image1.png; sourceTree = "<group>"; };
-		A4231C9F18E1CD9A00F4DEDE /* image2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = image2.jpg; sourceTree = "<group>"; };
 		A4231CA218E1CF2000F4DEDE /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -120,13 +123,15 @@
 		A4231C6F18E1C8FA00F4DEDE /* MySecondApp */ = {
 			isa = PBXGroup;
 			children = (
-				A4231C9E18E1CD9A00F4DEDE /* image1.png */,
-				A4231C9F18E1CD9A00F4DEDE /* image2.jpg */,
+				A40D772719094A040043B9C4 /* yokado_logo.jpg */,
+				A40D772819094A040043B9C4 /* tap_yokado_logo.jpg */,
 				A4231C7818E1C8FA00F4DEDE /* AppDelegate.h */,
 				A4231C7918E1C8FA00F4DEDE /* AppDelegate.m */,
 				A4231C7B18E1C8FA00F4DEDE /* Main.storyboard */,
 				A4231C7E18E1C8FA00F4DEDE /* ViewController.h */,
 				A4231C7F18E1C8FA00F4DEDE /* ViewController.m */,
+				A40D772B19094AC80043B9C4 /* MapViewController.h */,
+				A40D772C19094AC80043B9C4 /* MapViewController.m */,
 				A4231C8118E1C8FA00F4DEDE /* Images.xcassets */,
 				A4231C7018E1C8FA00F4DEDE /* Supporting Files */,
 			);
@@ -246,10 +251,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				A4231C8218E1C8FA00F4DEDE /* Images.xcassets in Resources */,
-				A4231CA118E1CD9A00F4DEDE /* image2.jpg in Resources */,
-				A4231CA018E1CD9A00F4DEDE /* image1.png in Resources */,
+				A40D772919094A040043B9C4 /* yokado_logo.jpg in Resources */,
 				A4231C7418E1C8FA00F4DEDE /* InfoPlist.strings in Resources */,
 				A4231C7D18E1C8FA00F4DEDE /* Main.storyboard in Resources */,
+				A40D772A19094A040043B9C4 /* tap_yokado_logo.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -271,6 +276,7 @@
 				A4231C8018E1C8FA00F4DEDE /* ViewController.m in Sources */,
 				A4231C7A18E1C8FA00F4DEDE /* AppDelegate.m in Sources */,
 				A4231C7618E1C8FA00F4DEDE /* main.m in Sources */,
+				A40D772D19094AC80043B9C4 /* MapViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -475,6 +481,7 @@
 				A4231C9A18E1C8FA00F4DEDE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		A4231C9B18E1C8FA00F4DEDE /* Build configuration list for PBXNativeTarget "MySecondAppTests" */ = {
 			isa = XCConfigurationList;
@@ -483,6 +490,7 @@
 				A4231C9D18E1C8FA00F4DEDE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
