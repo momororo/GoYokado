@@ -5,36 +5,36 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>DAC2C2A8-A4BF-4944-BFAF-546867AEFC1D</string>
+	<string>43F3873B-A6EB-41D8-B958-F3C324FBA705</string>
 	<key>IDESourceControlProjectName</key>
 	<string>MySecondApp</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>F98AC340-0AF7-4F30-8920-42EEFB3567CF</key>
-		<string>https://github.com/momororo/GoYokado</string>
+		<key>5EEAE744-0A75-4BEA-A93D-0E44A1DD3663</key>
+		<string>https://github.com/momororo/GoYokado.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>MySecondApp.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>F98AC340-0AF7-4F30-8920-42EEFB3567CF</key>
+		<key>5EEAE744-0A75-4BEA-A93D-0E44A1DD3663</key>
 		<string>../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>https://github.com/momororo/GoYokado</string>
+	<string>https://github.com/momororo/GoYokado.git</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>110</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>F98AC340-0AF7-4F30-8920-42EEFB3567CF</string>
+	<string>5EEAE744-0A75-4BEA-A93D-0E44A1DD3663</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>F98AC340-0AF7-4F30-8920-42EEFB3567CF</string>
+			<string>5EEAE744-0A75-4BEA-A93D-0E44A1DD3663</string>
 			<key>IDESourceControlWCCName</key>
-			<string>MySecondApp</string>
+			<string>GoYokado</string>
 		</dict>
 	</array>
 </dict>

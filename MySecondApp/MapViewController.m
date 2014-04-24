@@ -40,7 +40,7 @@
 
 -(void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
 {
-    MKCoordinateRegion region = _mapView.region;                    //表示領域の支持
+    MKCoordinateRegion region = _mapView.region;                    //表示領域の指示
     region.center.latitude = newLocation.coordinate.latitude;       //表示領域の中心緯度
     region.center.longitude = newLocation.coordinate.longitude;     //表示領域の中心経度
     region.span.latitudeDelta = 0.02;                               //表示範囲（度）ズーム
