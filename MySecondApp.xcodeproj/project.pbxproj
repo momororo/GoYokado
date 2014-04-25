@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		A40D772919094A040043B9C4 /* yokado_logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A40D772719094A040043B9C4 /* yokado_logo.jpg */; };
-		A40D772A19094A040043B9C4 /* tap_yokado_logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A40D772819094A040043B9C4 /* tap_yokado_logo.jpg */; };
 		A40D772D19094AC80043B9C4 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A40D772C19094AC80043B9C4 /* MapViewController.m */; };
 		A4231C6A18E1C8FA00F4DEDE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4231C6918E1C8FA00F4DEDE /* Foundation.framework */; };
 		A4231C6C18E1C8FA00F4DEDE /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4231C6B18E1C8FA00F4DEDE /* CoreGraphics.framework */; };
@@ -25,6 +23,8 @@
 		A4231C9318E1C8FA00F4DEDE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A4231C9118E1C8FA00F4DEDE /* InfoPlist.strings */; };
 		A4231C9518E1C8FA00F4DEDE /* MySecondAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A4231C9418E1C8FA00F4DEDE /* MySecondAppTests.m */; };
 		A4231CA318E1CF2000F4DEDE /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4231CA218E1CF2000F4DEDE /* MapKit.framework */; };
+		A438B7C6190A3E400009A5E2 /* yokado_logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A438B7C4190A3E400009A5E2 /* yokado_logo.jpg */; };
+		A438B7C7190A3E400009A5E2 /* tap_yokado_logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A438B7C5190A3E400009A5E2 /* tap_yokado_logo.jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,8 +38,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		A40D772719094A040043B9C4 /* yokado_logo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = yokado_logo.jpg; sourceTree = "<group>"; };
-		A40D772819094A040043B9C4 /* tap_yokado_logo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = tap_yokado_logo.jpg; sourceTree = "<group>"; };
 		A40D772B19094AC80043B9C4 /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
 		A40D772C19094AC80043B9C4 /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
 		A4231C6618E1C8FA00F4DEDE /* MySecondApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MySecondApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -62,6 +60,8 @@
 		A4231C9218E1C8FA00F4DEDE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		A4231C9418E1C8FA00F4DEDE /* MySecondAppTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MySecondAppTests.m; sourceTree = "<group>"; };
 		A4231CA218E1CF2000F4DEDE /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		A438B7C4190A3E400009A5E2 /* yokado_logo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = yokado_logo.jpg; sourceTree = "<group>"; };
+		A438B7C5190A3E400009A5E2 /* tap_yokado_logo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = tap_yokado_logo.jpg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,8 +123,8 @@
 		A4231C6F18E1C8FA00F4DEDE /* MySecondApp */ = {
 			isa = PBXGroup;
 			children = (
-				A40D772719094A040043B9C4 /* yokado_logo.jpg */,
-				A40D772819094A040043B9C4 /* tap_yokado_logo.jpg */,
+				A438B7C4190A3E400009A5E2 /* yokado_logo.jpg */,
+				A438B7C5190A3E400009A5E2 /* tap_yokado_logo.jpg */,
 				A4231C7818E1C8FA00F4DEDE /* AppDelegate.h */,
 				A4231C7918E1C8FA00F4DEDE /* AppDelegate.m */,
 				A4231C7B18E1C8FA00F4DEDE /* Main.storyboard */,
@@ -251,10 +251,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				A4231C8218E1C8FA00F4DEDE /* Images.xcassets in Resources */,
-				A40D772919094A040043B9C4 /* yokado_logo.jpg in Resources */,
+				A438B7C6190A3E400009A5E2 /* yokado_logo.jpg in Resources */,
 				A4231C7418E1C8FA00F4DEDE /* InfoPlist.strings in Resources */,
 				A4231C7D18E1C8FA00F4DEDE /* Main.storyboard in Resources */,
-				A40D772A19094A040043B9C4 /* tap_yokado_logo.jpg in Resources */,
+				A438B7C7190A3E400009A5E2 /* tap_yokado_logo.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
