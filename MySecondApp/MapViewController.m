@@ -38,6 +38,7 @@
     [clm startUpdatingLocation];                                //位置情報取得開始
 }
 
+
 -(void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
 {
     MKCoordinateRegion region = _mapView.region;                    //表示領域の指示
