@@ -9,6 +9,7 @@
 #import "ViewController.h"
 
 @interface ViewController ()
+@property (weak, nonatomic) IBOutlet UIImageView *yokadoLogo;
 
 @end
 
@@ -25,5 +26,28 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+
+//押した際にロゴが変わる
+- (IBAction)LogoChange:(id)sender {
+    UIImage *image = [UIImage imageNamed:@"tap_yokado_logo.jpg"];
+    _yokadoLogo.image = image;
+}
+
+//ボタン内で指を離した際にロゴがもとに戻る(ストーリーボードで画面遷移)
+- (IBAction)tapLogo:(id)sender {
+    UIImage *image = [UIImage imageNamed:@"yokado_logo.jpg"];
+    _yokadoLogo.image = image;
+    
+}
+
+//ロゴの外で指を離した際にロゴがもとに戻る
+- (IBAction)cancelLogo:(id)sender {
+    UIImage *image = [UIImage imageNamed:@"yokado_logo.jpg"];
+    _yokadoLogo.image = image;
+
+}
+
+
 
 @end
