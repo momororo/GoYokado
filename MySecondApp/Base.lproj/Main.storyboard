@@ -20,7 +20,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <connections>
-                                    <outlet property="delegate" destination="iFd-jI-3KI" id="TWf-uJ-E7s"/>
+                                    <outlet property="delegate" destination="oYd-K4-enQ" id="2r5-bR-CAS"/>
                                 </connections>
                             </mapView>
                         </subviews>
