@@ -32,7 +32,7 @@
     // Do any additional setup after loading the view.
     
     // ロケーションマネージャーを作成
-	self.locationManager = [[CLLocationManager alloc] init];
+	self.locationManager = CLLocationManager.new;
     if ([CLLocationManager locationServicesEnabled]) {
 		self.locationManager.delegate = self;
 		// 位置情報取得開始
@@ -45,10 +45,7 @@
 - (void)viewDidAppear:(BOOL)animated {
     
     [super viewDidAppear:animated];
-    
-    
 }
-
 
 
 - (void)didReceiveMemoryWarning
@@ -59,7 +56,7 @@
 
 
 
-//経度緯度を参照する（位置情報の取得）
+//経度緯度を参照（位置情報の取得）し、目的地までのルートを表示する
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
     //現在の緯度と経度を取得
@@ -71,24 +68,24 @@
     MKCoordinateRegion reg = MKCoordinateRegionMakeWithDistance(latlng, 13500, 13500);
     _mapView.region = reg;
     
-    //アノテーションを生成し、表示
+    //アノテーション(ピン)を生成し、表示
     MKPointAnnotation *ann = MKPointAnnotation.new;
     ann.coordinate = latlng;
     ann.title = @"現在地";
-    [_mapView removeAnnotations:_mapView.annotations];
+    [_mapView removeAnnotations:_mapView.annotations];          //マップ上にあるすべてのピンを削除
     [_mapView addAnnotation:ann];
     
     //緯度と経度を取得し続けるため、取得の停止
     [self.locationManager stopUpdatingLocation];
     
     
-    
+//経路表示
     // 現在地
     CLLocationCoordinate2D fromCoordinate = CLLocationCoordinate2DMake(latlng.latitude, latlng.longitude);
     
     
     // 目的地（渋谷）
-    CLLocationCoordinate2D toCoordinate = CLLocationCoordinate2DMake(35.658987, 139.702776);
+    CLLocationCoordinate2D toCoordinate = CLLocationCoordinate2DMake(35.637956, 139.293568);
     
     // CLLocationCoordinate2D から MKPlacemark を生成
     MKPlacemark *fromPlacemark = [[MKPlacemark alloc] initWithCoordinate:fromCoordinate
@@ -101,7 +98,7 @@
     MKMapItem *toItem   = [[MKMapItem alloc] initWithPlacemark:toPlacemark];
     
     // MKMapItem をセットして MKDirectionsRequest を生成
-    MKDirectionsRequest *request = [[MKDirectionsRequest alloc] init];
+    MKDirectionsRequest *request = MKDirectionsRequest.new;
     request.source = fromItem;
     request.destination = toItem;
     request.requestsAlternateRoutes = YES;
@@ -121,24 +118,15 @@
              
              // 地図上にルートを描画
              [self.mapView addOverlay:route.polyline];
+             
+             //目的地にピンを刺す
+             MKPointAnnotation *spot = MKPointAnnotation.new;
+             spot.coordinate = toCoordinate;
+             spot.title = @"イトーヨーカドー八王子店";
+             [_mapView addAnnotation:spot];
          }
      }];
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
 }
-
-
-
-
 
 
 // 位置情報が取得失敗した場合にコールされる。
