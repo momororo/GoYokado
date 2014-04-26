@@ -15,11 +15,6 @@
 @property (strong, nonatomic) CLLocationManager *locationManager;
 @end
 
-
-
-
-
-
 @implementation MapViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -36,37 +31,63 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    // 地図の中心・表示範囲を設定
-    CLLocationCoordinate2D centerCoordinate = CLLocationCoordinate2DMake(35.665213, 139.730011);
-    MKCoordinateSpan span = MKCoordinateSpanMake(0.08, 0.08);
-    self.mapView.region = MKCoordinateRegionMake(centerCoordinate, span);
-}
-
-
-
-
-- (void)viewDidAppear:(BOOL)animated {
-    
-    [super viewDidAppear:animated];
-    
     // ロケーションマネージャーを作成
 	self.locationManager = [[CLLocationManager alloc] init];
     if ([CLLocationManager locationServicesEnabled]) {
 		self.locationManager.delegate = self;
 		// 位置情報取得開始
-		[self.locationManager startUpdatingLocation];
+		[_locationManager startUpdatingLocation];
 	}else{
         NSLog(@"位置情報使えないよ><");
     }
-    
-    
-    
-    
-    // 六本木
-    CLLocationCoordinate2D fromCoordinate = CLLocationCoordinate2DMake(35.665213, 139.730011);
+}
 
+- (void)viewDidAppear:(BOOL)animated {
     
-    // 渋谷
+    [super viewDidAppear:animated];
+    
+    
+}
+
+
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+
+
+//経度緯度を参照する（位置情報の取得）
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
+{
+    //現在の緯度と経度を取得
+    CLLocation *location = [locations objectAtIndex:(locations.count-1)];
+    CLLocationCoordinate2D latlng = location.coordinate;
+    NSLog(@" %f , %f ",latlng.latitude,latlng.longitude);
+    
+    //500mスクウェアで領域を生成
+    MKCoordinateRegion reg = MKCoordinateRegionMakeWithDistance(latlng, 13500, 13500);
+    _mapView.region = reg;
+    
+    //アノテーションを生成し、表示
+    MKPointAnnotation *ann = MKPointAnnotation.new;
+    ann.coordinate = latlng;
+    ann.title = @"現在地";
+    [_mapView removeAnnotations:_mapView.annotations];
+    [_mapView addAnnotation:ann];
+    
+    //緯度と経度を取得し続けるため、取得の停止
+    [self.locationManager stopUpdatingLocation];
+    
+    
+    
+    // 現在地
+    CLLocationCoordinate2D fromCoordinate = CLLocationCoordinate2DMake(latlng.latitude, latlng.longitude);
+    
+    
+    // 目的地（渋谷）
     CLLocationCoordinate2D toCoordinate = CLLocationCoordinate2DMake(35.658987, 139.702776);
     
     // CLLocationCoordinate2D から MKPlacemark を生成
@@ -102,29 +123,23 @@
              [self.mapView addOverlay:route.polyline];
          }
      }];
-}
-
-
-
-
-
-
-
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-
-- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
     
-    NSLog(@"現在のlongitude:%f", newLocation.coordinate.longitude);
-    NSLog(@"現在のlatitude:%f",  newLocation.coordinate.latitude);
     
-    [self.locationManager stopUpdatingLocation];  // 何回もこのメソッドが呼ばれたくないならこのメソッドを追加する
+    
+    
+    
+    
+    
+    
+    
+    
+    
 }
+
+
+
+
+
 
 // 位置情報が取得失敗した場合にコールされる。
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
@@ -152,6 +167,7 @@
 
 
 #pragma mark - MKMapViewDelegate
+
 
 // 地図上に描画するルートの色などを指定（これを実装しないと何も表示されない）
 - (MKOverlayRenderer *)mapView:(MKMapView *)mapView rendererForOverlay:(id<MKOverlay>)overlay
