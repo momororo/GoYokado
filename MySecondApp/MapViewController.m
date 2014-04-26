@@ -7,8 +7,12 @@
 //
 
 #import "MapViewController.h"
+#import <CoreLocation/CoreLocation.h>
+#import <MapKit/MapKit.h>
 
-@interface MapViewController ()
+@interface MapViewController ()<MKMapViewDelegate>{
+    CLLocationManager *clm;
+}
 
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 
