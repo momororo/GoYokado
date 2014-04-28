@@ -9,10 +9,13 @@
 #import "MapViewController.h"
 #import <CoreLocation/CoreLocation.h>
 #import <MapKit/MapKit.h>
+#import "Yokado.h"
 
 @interface MapViewController ()<CLLocationManagerDelegate>
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property (strong, nonatomic) CLLocationManager *locationManager;
+@property (strong, nonatomic) NSMutableArray    *yokadoList;
+@property (strong, nonatomic) Yokado *yokado;
 @end
 
 @implementation MapViewController
@@ -30,7 +33,14 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+
     
+    //ヨーカドーのリストを生成
+    NSMutableArray *yokadoList = [self getDataFromCSV:@"yokadoList"];
+    
+    //リストの中から1店舗の情報をランダムで取得する
+    _yokado = [self getRandomFromList:yokadoList];
+
     // ロケーションマネージャーを作成
 	self.locationManager = CLLocationManager.new;
     if ([CLLocationManager locationServicesEnabled]) {
@@ -40,6 +50,7 @@
 	}else{
         NSLog(@"位置情報使えないよ><");
     }
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -84,8 +95,8 @@
     CLLocationCoordinate2D fromCoordinate = CLLocationCoordinate2DMake(latlng.latitude, latlng.longitude);
     
     
-    // 目的地（渋谷）
-    CLLocationCoordinate2D toCoordinate = CLLocationCoordinate2DMake(35.637956, 139.293568);
+    // 目的地（ヨーカドー）
+    CLLocationCoordinate2D toCoordinate = CLLocationCoordinate2DMake(_yokado.latitude.intValue, _yokado.longitude.intValue);
     
     // CLLocationCoordinate2D から MKPlacemark を生成
     MKPlacemark *fromPlacemark = [[MKPlacemark alloc] initWithCoordinate:fromCoordinate
@@ -122,7 +133,7 @@
              //目的地にピンを刺す
              MKPointAnnotation *spot = MKPointAnnotation.new;
              spot.coordinate = toCoordinate;
-             spot.title = @"イトーヨーカドー八王子店";
+             spot.title = _yokado.name;
              [_mapView addAnnotation:spot];
          }
      }];
@@ -172,6 +183,85 @@
         return nil;
     }
 }
+
+
+
+
+
+
+/*******************************************************
+ CSVファイルからデータを引っ張るメソッド
+ http://snippets.feb19.jp/?p=942
+ から取得
+ 
+ 引数にファイルネームを指定すると
+ csvを配列形式で返してくれるようである。
+*******************************************************/
+- (NSMutableArray *)getDataFromCSV:(NSString *)csvFileName
+{
+    
+
+    // CSVファイルからセクションデータを取得する
+    NSString *csvFile = [[NSBundle mainBundle] pathForResource:csvFileName ofType:@"csv"];
+    NSLog(@"%@",csvFile);
+    NSData *csvData = [NSData dataWithContentsOfFile:csvFile];
+    NSString *csv = [[NSString alloc] initWithData:csvData encoding:NSUTF8StringEncoding];
+    
+    NSScanner *scanner = [NSScanner scannerWithString:csv];
+
+    // 改行文字の選定
+    NSCharacterSet *chSet = [NSCharacterSet newlineCharacterSet];
+    NSString *line;
+    
+    // レコードを入れる NSMutableArray
+    NSMutableArray *yokadoList = [NSMutableArray array];
+    
+    while (![scanner isAtEnd]) {
+        
+        // 一行づつ読み込んでいく
+        [scanner scanUpToCharactersFromSet:chSet intoString:&line];
+        NSArray *array = [line componentsSeparatedByString:@","];
+        
+        //ヨーカドーオブジェクトに挿入
+        Yokado *yokado = [Yokado new];
+        yokado.name = array[0];
+        yokado.address = array[1];
+        yokado.latitude = array[2];
+        yokado.longitude = array[3];
+        
+        [yokadoList addObject:yokado];
+        
+        // 改行文字をスキップ
+        [scanner scanCharactersFromSet:chSet intoString:NULL];
+    }
+    return yokadoList;
+}
+
+/*******************************************************
+ CSVファイルからデータを引っ張るメソッド　おわり
+*******************************************************/
+
+
+
+/*******************************************************
+ 引数のyokadoListからランダムに選ぶメソッド
+ yokadoオブジェクトを返す
+*******************************************************/
+ 
+-(Yokado *)getRandomFromList:(NSMutableArray *)yokadoList
+{
+    //乱数発生
+    NSInteger value = (int) arc4random_uniform(yokadoList.count);
+    
+    //乱数をもとに配列から取り出す
+    return yokadoList[value];
+    
+    
+}
+/*******************************************************
+ 引数のyokadoListからランダムに選ぶメソッド　おわり
+ *******************************************************/
+
 
 
 
