@@ -40,6 +40,7 @@
     
     //リストの中から1店舗の情報をランダムで取得する
     _yokado = [self getRandomFromList:yokadoList];
+    
 
     // ロケーションマネージャーを作成
 	self.locationManager = CLLocationManager.new;
