@@ -34,13 +34,6 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
 
-    
-    //ヨーカドーのリストを生成
-    NSMutableArray *yokadoList = [self getDataFromCSV:@"yokadoList"];
-    
-    //リストの中から1店舗の情報をランダムで取得する
-    _yokado = [self getRandomFromList:yokadoList];
-
     // ロケーションマネージャーを作成
 	self.locationManager = CLLocationManager.new;
     if ([CLLocationManager locationServicesEnabled]) {
@@ -70,6 +63,14 @@
 //経度緯度を参照（位置情報の取得）し、目的地までのルートを表示する
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
+    
+    
+    //ヨーカドーのリストを生成
+    NSMutableArray *yokadoList = [self getDataFromCSV:@"yokadoList"];
+    
+    //リストの中から1店舗の情報をランダムで取得する
+    _yokado = [self getRandomFromList:yokadoList];
+
     //現在の緯度と経度を取得
     CLLocation *location = [locations objectAtIndex:(locations.count-1)];
     CLLocationCoordinate2D latlng = location.coordinate;
@@ -228,7 +229,7 @@
         yokado.address = array[1];
         yokado.latitude = array[2];
         yokado.longitude = array[3];
-                
+        
         [yokadoList addObject:yokado];
         
         // 改行文字をスキップ
