@@ -40,7 +40,6 @@
     
     //リストの中から1店舗の情報をランダムで取得する
     _yokado = [self getRandomFromList:yokadoList];
-    
 
     // ロケーションマネージャーを作成
 	self.locationManager = CLLocationManager.new;
@@ -229,7 +228,7 @@
         yokado.address = array[1];
         yokado.latitude = array[2];
         yokado.longitude = array[3];
-        
+                
         [yokadoList addObject:yokado];
         
         // 改行文字をスキップ
