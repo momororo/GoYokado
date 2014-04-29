@@ -135,8 +135,9 @@
              spot.title = _yokado.name;
              [_mapView addAnnotation:spot];
              
-             //ナビゲーションバーに目的地を表示
-             self.navigationItem.title = _yokado.name;
+             //ナビゲーションバーに距離と目的地を表示
+             NSString *distance = [NSString stringWithFormat:@"約%.0f km",route.distance/1000];
+             self.navigationItem.title = [NSString stringWithFormat:@"%@ %@",_yokado.name,distance];
              
              
              
