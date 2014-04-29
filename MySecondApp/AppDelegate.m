@@ -13,6 +13,46 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     
+        
+        // CSVファイルからセクションデータを取得する
+        NSString *csvFile = [[NSBundle mainBundle] pathForResource:@"yokadoList" ofType:@"csv"];
+        NSLog(@"%@",csvFile);
+        NSData *csvData = [NSData dataWithContentsOfFile:csvFile];
+        NSString *csv = [[NSString alloc] initWithData:csvData encoding:NSUTF8StringEncoding];
+        
+        NSScanner *scanner = [NSScanner scannerWithString:csv];
+        
+        // 改行文字の選定
+        NSCharacterSet *chSet = [NSCharacterSet newlineCharacterSet];
+        NSString *line;
+        
+        // レコードを入れる NSMutableArray
+        _yokadoList = [NSMutableArray array];
+        
+        while (![scanner isAtEnd]) {
+            
+            // 一行づつ読み込んでいく
+            [scanner scanUpToCharactersFromSet:chSet intoString:&line];
+            NSArray *array = [line componentsSeparatedByString:@","];
+            
+            //ヨーカドーオブジェクトに挿入
+            Yokado *yokado = [Yokado new];
+            yokado.name = array[0];
+            yokado.address = array[1];
+            yokado.latitude = array[2];
+            yokado.longitude = array[3];
+            
+            [_yokadoList addObject:yokado];
+            
+            // 改行文字をスキップ
+            [scanner scanCharactersFromSet:chSet intoString:NULL];
+    }
+    
+    /*******************************************************
+     CSVファイルからデータを引っ張るメソッド　おわり
+     *******************************************************/
+
+    
         return YES;
 }
 							

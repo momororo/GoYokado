@@ -10,11 +10,11 @@
 #import <CoreLocation/CoreLocation.h>
 #import <MapKit/MapKit.h>
 #import "Yokado.h"
+#import "AppDelegate.h"
 
 @interface MapViewController ()<CLLocationManagerDelegate>
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property (strong, nonatomic) CLLocationManager *locationManager;
-@property (strong, nonatomic) NSMutableArray    *yokadoList;
 @property (strong, nonatomic) Yokado *yokado;
 @end
 
@@ -65,11 +65,12 @@
 {
     
     
-    //ヨーカドーのリストを生成
-    NSMutableArray *yokadoList = [self getDataFromCSV:@"yokadoList"];
+    //appデリゲートに接続
+    AppDelegate *ap = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    
     
     //リストの中から1店舗の情報をランダムで取得する
-    _yokado = [self getRandomFromList:yokadoList];
+    _yokado = [self getRandomFromList:ap.yokadoList];
 
     //現在の緯度と経度を取得
     CLLocation *location = [locations objectAtIndex:(locations.count-1)];
@@ -224,57 +225,6 @@
 
 
 
-/*******************************************************
- CSVファイルからデータを引っ張るメソッド
- http://snippets.feb19.jp/?p=942
- から取得
- 
- 引数にファイルネームを指定すると
- csvを配列形式で返してくれるようである。
-*******************************************************/
-- (NSMutableArray *)getDataFromCSV:(NSString *)csvFileName
-{
-    
-
-    // CSVファイルからセクションデータを取得する
-    NSString *csvFile = [[NSBundle mainBundle] pathForResource:csvFileName ofType:@"csv"];
-    NSLog(@"%@",csvFile);
-    NSData *csvData = [NSData dataWithContentsOfFile:csvFile];
-    NSString *csv = [[NSString alloc] initWithData:csvData encoding:NSUTF8StringEncoding];
-    
-    NSScanner *scanner = [NSScanner scannerWithString:csv];
-
-    // 改行文字の選定
-    NSCharacterSet *chSet = [NSCharacterSet newlineCharacterSet];
-    NSString *line;
-    
-    // レコードを入れる NSMutableArray
-    NSMutableArray *yokadoList = [NSMutableArray array];
-    
-    while (![scanner isAtEnd]) {
-        
-        // 一行づつ読み込んでいく
-        [scanner scanUpToCharactersFromSet:chSet intoString:&line];
-        NSArray *array = [line componentsSeparatedByString:@","];
-        
-        //ヨーカドーオブジェクトに挿入
-        Yokado *yokado = [Yokado new];
-        yokado.name = array[0];
-        yokado.address = array[1];
-        yokado.latitude = array[2];
-        yokado.longitude = array[3];
-        
-        [yokadoList addObject:yokado];
-        
-        // 改行文字をスキップ
-        [scanner scanCharactersFromSet:chSet intoString:NULL];
-    }
-    return yokadoList;
-}
-
-/*******************************************************
- CSVファイルからデータを引っ張るメソッド　おわり
-*******************************************************/
 
 
 

@@ -7,9 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Yokado.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
+@property (strong, nonatomic) NSMutableArray *yokadoList;
+@property (strong, nonatomic) Yokado *yokado;
+
 
 @end
