@@ -135,6 +135,10 @@
              spot.title = _yokado.name;
              [_mapView addAnnotation:spot];
              
+             //ナビゲーションバーに目的地を表示
+             self.navigationItem.title = _yokado.name;
+             
+             
              
              
              //ピンの表示領域の設定
