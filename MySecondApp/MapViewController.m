@@ -76,10 +76,6 @@
     CLLocationCoordinate2D latlng = location.coordinate;
     NSLog(@" %f , %f ",latlng.latitude,latlng.longitude);
     
-    //500mスクウェアで領域を生成
-    MKCoordinateRegion reg = MKCoordinateRegionMakeWithDistance(latlng, 13500, 13500);
-    _mapView.region = reg;
-    
     //アノテーション(ピン)を生成し、表示
     MKPointAnnotation *ann = MKPointAnnotation.new;
     ann.coordinate = latlng;
@@ -136,6 +132,44 @@
              spot.coordinate = toCoordinate;
              spot.title = _yokado.name;
              [_mapView addAnnotation:spot];
+             
+             
+             
+             //ピンの表示領域の設定
+             double minLat = 9999.0;
+             double minLng = 9999.0;
+             double maxLat = -9999.0;
+             double maxLng = -9999.0;
+             double lat, lng;
+             for (id<MKAnnotation> annotation in _mapView.annotations){
+                 lat = annotation.coordinate.latitude;
+                 lng = annotation.coordinate.longitude;
+                 //緯度の最大最小を求める
+                 if(minLat > lat)
+                     minLat = lat;
+                 if(lat > maxLat)
+                     maxLat = lat;
+                 
+                 //経度の最大最小を求める
+                 if(minLng > lng)
+                     minLng = lng;
+                 if(lng > maxLng)
+                     maxLng = lng;
+             }
+             CLLocationCoordinate2D center = CLLocationCoordinate2DMake((maxLat + minLat) / 2.0, (maxLng + minLng) / 2.0);
+             MKCoordinateSpan span = MKCoordinateSpanMake(maxLat - minLat, (maxLng - minLng) * 2);
+             MKCoordinateRegion region = MKCoordinateRegionMake(center, span);
+             [_mapView setRegion:[_mapView regionThatFits:region] animated:YES];
+             
+             
+             
+             
+             
+             
+             
+             
+             
+             
          }
      }];
 }
