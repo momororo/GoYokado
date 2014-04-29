@@ -94,7 +94,8 @@
     
     
     // 目的地（ヨーカドー）
-    CLLocationCoordinate2D toCoordinate = CLLocationCoordinate2DMake(_yokado.latitude.intValue, _yokado.longitude.intValue);
+    CLLocationCoordinate2D toCoordinate = CLLocationCoordinate2DMake(_yokado.latitude.floatValue, _yokado.longitude.floatValue);
+    NSLog(@"%f ,%f",_yokado.latitude.floatValue,_yokado.longitude.floatValue);
     
     // CLLocationCoordinate2D から MKPlacemark を生成
     MKPlacemark *fromPlacemark = [[MKPlacemark alloc] initWithCoordinate:fromCoordinate
