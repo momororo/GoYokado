@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		04608202190E572100266ACA /* Yokado.m in Sources */ = {isa = PBXBuildFile; fileRef = 04608200190E572100266ACA /* Yokado.m */; };
-		04608204190E69A700266ACA /* yokadoList.csv in Resources */ = {isa = PBXBuildFile; fileRef = 04608201190E572100266ACA /* yokadoList.csv */; };
+		04ACB1441910E9DD001231BF /* yokadoList.csv in Resources */ = {isa = PBXBuildFile; fileRef = 04ACB1431910E9DD001231BF /* yokadoList.csv */; };
 		A40D772D19094AC80043B9C4 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A40D772C19094AC80043B9C4 /* MapViewController.m */; };
 		A4231C6A18E1C8FA00F4DEDE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4231C6918E1C8FA00F4DEDE /* Foundation.framework */; };
 		A4231C6C18E1C8FA00F4DEDE /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4231C6B18E1C8FA00F4DEDE /* CoreGraphics.framework */; };
@@ -42,7 +42,7 @@
 /* Begin PBXFileReference section */
 		046081FF190E572100266ACA /* Yokado.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Yokado.h; sourceTree = "<group>"; };
 		04608200190E572100266ACA /* Yokado.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Yokado.m; sourceTree = "<group>"; };
-		04608201190E572100266ACA /* yokadoList.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = yokadoList.csv; sourceTree = "<group>"; };
+		04ACB1431910E9DD001231BF /* yokadoList.csv */ = {isa = PBXFileReference; lastKnownFileType = text; path = yokadoList.csv; sourceTree = "<group>"; };
 		A40D772B19094AC80043B9C4 /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
 		A40D772C19094AC80043B9C4 /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
 		A4231C6618E1C8FA00F4DEDE /* MySecondApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MySecondApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -128,9 +128,9 @@
 		A4231C6F18E1C8FA00F4DEDE /* MySecondApp */ = {
 			isa = PBXGroup;
 			children = (
+				04ACB1431910E9DD001231BF /* yokadoList.csv */,
 				046081FF190E572100266ACA /* Yokado.h */,
 				04608200190E572100266ACA /* Yokado.m */,
-				04608201190E572100266ACA /* yokadoList.csv */,
 				A438B7C4190A3E400009A5E2 /* yokado_logo.jpg */,
 				A438B7C5190A3E400009A5E2 /* tap_yokado_logo.jpg */,
 				A4231C7818E1C8FA00F4DEDE /* AppDelegate.h */,
@@ -258,7 +258,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				04608204190E69A700266ACA /* yokadoList.csv in Resources */,
+				04ACB1441910E9DD001231BF /* yokadoList.csv in Resources */,
 				A4231C8218E1C8FA00F4DEDE /* Images.xcassets in Resources */,
 				A438B7C6190A3E400009A5E2 /* yokado_logo.jpg in Resources */,
 				A4231C7418E1C8FA00F4DEDE /* InfoPlist.strings in Resources */,
