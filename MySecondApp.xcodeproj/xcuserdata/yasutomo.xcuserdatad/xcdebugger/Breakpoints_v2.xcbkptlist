@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MySecondApp/MapViewController.m"
-            timestampString = "420456716.154258"
+            timestampString = "420536865.358559"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "209"
-            endingLineNumber = "209"
+            startingLineNumber = "229"
+            endingLineNumber = "229"
             landmarkName = "@implementation MapViewController"
             landmarkType = "3">
          </BreakpointContent>

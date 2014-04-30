@@ -73,7 +73,7 @@
     _yokado = [self getRandomFromList:ap.yokadoList];
 
     //現在の緯度と経度を取得
-    CLLocation *location = [locations objectAtIndex:(locations.count-1)];
+    CLLocation *location = locations[(locations.count-1)];
     CLLocationCoordinate2D latlng = location.coordinate;
     NSLog(@" %f , %f ",latlng.latitude,latlng.longitude);
     
@@ -123,7 +123,7 @@
          
          if ([response.routes count] > 0)
          {
-             MKRoute *route = [response.routes objectAtIndex:0];
+             MKRoute *route = (response.routes)[0];
              NSLog(@"distance: %.2f meter", route.distance);
              
              // 地図上にルートを描画
@@ -135,9 +135,29 @@
              spot.title = _yokado.name;
              [_mapView addAnnotation:spot];
              
+
+             
+    /*ナビゲーションバーのタイトルの設定
+       細かい設定が可能なようです。*/
              //ナビゲーションバーに距離と目的地を表示
              NSString *distance = [NSString stringWithFormat:@"約%.0f km",route.distance/1000];
-             self.navigationItem.title = [NSString stringWithFormat:@"%@ %@",_yokado.name,distance];
+             
+             UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectZero];
+             //文の設定
+             titleLabel.text = [NSString stringWithFormat:@"%@ %@",_yokado.name,distance];
+             //フォントの設定
+             titleLabel.font = [UIFont fontWithName:@"HiraMaruPro-W4" size:18];
+             //背景色
+             titleLabel.backgroundColor = [UIColor clearColor];
+             //文字の色
+             titleLabel.textColor = [UIColor blackColor];
+             //位置の設定
+             titleLabel.textAlignment = NSTextAlignmentCenter;
+             //謎処理
+             [titleLabel sizeToFit];
+             
+             self.navigationItem.titleView = titleLabel;
+    /*ナビゲーションバーのタイトル設定おわり*/
              
              
              
