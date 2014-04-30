@@ -43,12 +43,14 @@
 	}else{
         NSLog(@"位置情報使えないよ><");
     }
+
     
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     
     [super viewDidAppear:animated];
+        
 }
 
 
