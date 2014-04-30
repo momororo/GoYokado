@@ -184,7 +184,7 @@
                      maxLng = lng;
              }
              CLLocationCoordinate2D center = CLLocationCoordinate2DMake((maxLat + minLat) / 2.0, (maxLng + minLng) / 2.0);
-             MKCoordinateSpan span = MKCoordinateSpanMake(maxLat - minLat, (maxLng - minLng) * 2);
+             MKCoordinateSpan span = MKCoordinateSpanMake((maxLat - minLat) * 2, (maxLng - minLng) * 2);
              MKCoordinateRegion region = MKCoordinateRegionMake(center, span);
              [_mapView setRegion:[_mapView regionThatFits:region] animated:YES];
              
