@@ -50,7 +50,7 @@
 - (void)viewDidAppear:(BOOL)animated {
     
     [super viewDidAppear:animated];
-        
+    
 }
 
 
@@ -146,7 +146,7 @@
              
              UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectZero];
              //文の設定
-             titleLabel.text = [NSString stringWithFormat:@"%@ %@",_yokado.name,distance];
+             titleLabel.text = [NSString stringWithFormat:@"%@ %@",_yokado.address,distance];
              //フォントの設定
              titleLabel.font = [UIFont fontWithName:@"HiraMaruPro-W4" size:18];
              //背景色
