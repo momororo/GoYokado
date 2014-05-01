@@ -55,6 +55,9 @@
         NSLog(@"位置情報使えないよ><");
     }
     
+    mapView.showsUserLocation = YES;
+    mapView.userLocation.title = @"現在地";
+    
     //ロケーションマネージャーメソッドの起動
     [self locationManager];
 
@@ -93,16 +96,8 @@
     CLLocationCoordinate2D latlng = location.coordinate;
     NSLog(@" %f , %f ",latlng.latitude,latlng.longitude);
     
-    //アノテーション(ピン)を生成し、表示
-    MKPointAnnotation *ann = MKPointAnnotation.new;
-    ann.coordinate = latlng;
-    ann.title = @"現在地";
-    
-　　 //マップ上にあるすべてのピンを削除
+    //マップ上にあるすべてのピンを削除
     [mapView removeAnnotations:mapView.annotations];
-    
-    //マップ上にピンを追加
-    [mapView addAnnotation:ann];
     
     //緯度と経度を取得し続けるため、取得の停止
     [self.locationManager stopUpdatingLocation];
@@ -163,13 +158,6 @@
              //カスタムアノテーションをaddする
              [mapView addAnnotation:customAnnotation];
              
-             /*
-             MKPointAnnotation *spot = MKPointAnnotation.new;
-             spot.coordinate = toCoordinate;
-             spot.title = _yokado.name;
-             [_mapView addAnnotation:spot];*/
-             
-
              
     /*ナビゲーションバーのタイトルの設定
        細かい設定が可能なようです。*/
@@ -224,13 +212,8 @@
              MKCoordinateRegion region = MKCoordinateRegionMake(center, span);
              [mapView setRegion:[mapView regionThatFits:region] animated:YES];
              
-             
-             
-             
+                //マップに表示する
              [self.view addSubview:self.mapView];
-             
-             
-             
              
              
          }
@@ -288,6 +271,9 @@
 
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation
 {
+    if (annotation == mapView.userLocation) {
+        return nil;
+    }
 	MKAnnotationView *annotationView;
     
     // 再利用可能なannotationがあるかどうかを判断するための識別子を定義
