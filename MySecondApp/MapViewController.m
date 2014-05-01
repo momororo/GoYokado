@@ -281,6 +281,8 @@
     annotationView.image = [UIImage imageNamed:@"flag.png"];
     annotationView.canShowCallout = YES;  // この設定で吹き出しが出る
     annotationView.annotation = annotation;
+    annotationView.centerOffset = CGPointMake(0, -43);
+
     
     return annotationView;
 }
