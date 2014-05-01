@@ -11,6 +11,7 @@
 #import <MapKit/MapKit.h>
 #import "Yokado.h"
 #import "AppDelegate.h"
+#import "CustomAnnotation.h"
 
 @interface MapViewController ()<CLLocationManagerDelegate>
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
@@ -19,6 +20,7 @@
 @end
 
 @implementation MapViewController
+@synthesize mapView;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -33,6 +35,7 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
 
     // ロケーションマネージャーを作成
 	self.locationManager = CLLocationManager.new;
@@ -43,14 +46,16 @@
 	}else{
         NSLog(@"位置情報使えないよ><");
     }
+    
+    [self locationManager];
+
 
     
 }
 
-- (void)viewDidAppear:(BOOL)animated {
+- (void)viewwillAppear:(BOOL)animated {
     
     [super viewDidAppear:animated];
-    
 }
 
 
@@ -83,8 +88,8 @@
     MKPointAnnotation *ann = MKPointAnnotation.new;
     ann.coordinate = latlng;
     ann.title = @"現在地";
-    [_mapView removeAnnotations:_mapView.annotations];          //マップ上にあるすべてのピンを削除
-    [_mapView addAnnotation:ann];
+    [mapView removeAnnotations:mapView.annotations];          //マップ上にあるすべてのピンを削除
+    [mapView addAnnotation:ann];
     
     //緯度と経度を取得し続けるため、取得の停止
     [self.locationManager stopUpdatingLocation];
@@ -132,10 +137,15 @@
              [self.mapView addOverlay:route.polyline];
              
              //目的地にピンを刺す
+             NSString *title = _yokado.name;
+             CustomAnnotation *customAnnotation = [[CustomAnnotation alloc] initWithCoordinates:toCoordinate newTitle:title newSubTitle:nil];
+             [mapView addAnnotation:customAnnotation];
+             
+             /*
              MKPointAnnotation *spot = MKPointAnnotation.new;
              spot.coordinate = toCoordinate;
              spot.title = _yokado.name;
-             [_mapView addAnnotation:spot];
+             [_mapView addAnnotation:spot];*/
              
 
              
@@ -170,7 +180,7 @@
              double maxLat = -9999.0;
              double maxLng = -9999.0;
              double lat, lng;
-             for (id<MKAnnotation> annotation in _mapView.annotations){
+             for (id<MKAnnotation> annotation in mapView.annotations){
                  lat = annotation.coordinate.latitude;
                  lng = annotation.coordinate.longitude;
                  //緯度の最大最小を求める
@@ -188,12 +198,12 @@
              CLLocationCoordinate2D center = CLLocationCoordinate2DMake((maxLat + minLat) / 2.0, (maxLng + minLng) / 2.0);
              MKCoordinateSpan span = MKCoordinateSpanMake((maxLat - minLat) * 2, (maxLng - minLng) * 2);
              MKCoordinateRegion region = MKCoordinateRegionMake(center, span);
-             [_mapView setRegion:[_mapView regionThatFits:region] animated:YES];
+             [mapView setRegion:[mapView regionThatFits:region] animated:YES];
              
              
              
              
-             
+             [self.view addSubview:self.mapView];
              
              
              
@@ -250,10 +260,30 @@
 
 
 
+#pragma - mapkit delegate
 
-
-
-
+- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation
+{
+	MKAnnotationView *annotationView;
+    
+    // 再利用可能なannotationがあるかどうかを判断するための識別子を定義
+    NSString *identifier = @"Pin";
+    
+    // "Pin"という識別子のついたannotationを使いまわせるかチェック
+    annotationView = (MKAnnotationView*)[self.mapView dequeueReusableAnnotationViewWithIdentifier:identifier];
+    
+    // 使い回しができるannotationがない場合、annotationの初期化
+    if(annotationView == nil) {
+        annotationView = [[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:identifier];
+    }
+    
+    // 画像をannotationに設定設定
+    annotationView.image = [UIImage imageNamed:@"flag.png"];
+    annotationView.canShowCallout = YES;  // この設定で吹き出しが出る
+    annotationView.annotation = annotation;
+    
+    return annotationView;
+}
 
 
 /*******************************************************
