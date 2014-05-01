@@ -17,6 +17,7 @@
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property (strong, nonatomic) CLLocationManager *locationManager;
 @property (strong, nonatomic) Yokado *yokado;
+
 @end
 
 @implementation MapViewController
@@ -36,6 +37,10 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    
+    mapView.showsUserLocation = YES;
+    mapView.userLocation.title = @"現在地";
+
 
     // ロケーションマネージャーを作成
 	self.locationManager = CLLocationManager.new;
@@ -48,6 +53,8 @@
     }
     
     [self locationManager];
+    
+    [mapView removeAnnotations:mapView.annotations];
 
 
     
@@ -83,13 +90,6 @@
     CLLocation *location = locations[(locations.count-1)];
     CLLocationCoordinate2D latlng = location.coordinate;
     NSLog(@" %f , %f ",latlng.latitude,latlng.longitude);
-    
-    //アノテーション(ピン)を生成し、表示
-    MKPointAnnotation *ann = MKPointAnnotation.new;
-    ann.coordinate = latlng;
-    ann.title = @"現在地";
-    [mapView removeAnnotations:mapView.annotations];          //マップ上にあるすべてのピンを削除
-    [mapView addAnnotation:ann];
     
     //緯度と経度を取得し続けるため、取得の停止
     [self.locationManager stopUpdatingLocation];
@@ -134,17 +134,22 @@
              
             // 地図上にルートを描画
              [self.mapView addOverlay:route.polyline];
-             
-            //目的地にピンを刺す
-             NSString *title = _yokado.name;
-            
-            //CustomAnnotationクラスの初期化
-             CustomAnnotation *customAnnotation = [[CustomAnnotation alloc] initWithCoordinates:toCoordinate newTitle:title newSubTitle:nil];
-            
-            //annotationをマップに追加
-             [mapView addAnnotation:customAnnotation];
     /* 経路を表示する設定　おわり */
-             
+    
+    /* 現在地・目的地のアノテーションの設定 */
+            
+            //現在地
+            //NSString *title = @"現在地";
+            //CustomAnnotation *ann = [[CustomAnnotation alloc]initWithCoordinates:latlng newTitle:title newSubTitle:nil];
+            
+            //目的地
+            NSString *totitle = _yokado.name;
+            CustomAnnotation *customAnnotation = [[CustomAnnotation alloc] initWithCoordinates:toCoordinate newTitle:totitle newSubTitle:nil];
+            
+                                
+            //annotationをマップに追加
+            [mapView addAnnotation:customAnnotation];
+            //[mapView addAnnotation:ann];
 
              
     /*ナビゲーションバーのタイトルの設定
@@ -248,12 +253,16 @@
     }
 }
 
-
-
+/*******************************************************************
+                            アノテーション
+*******************************************************************/
 #pragma - mapkit delegate
 
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation
 {
+    if (annotation == mapView.userLocation) {
+        return nil;
+    } else {
 	MKAnnotationView *annotationView;
     
     // 再利用可能なannotationがあるかどうかを判断するための識別子を定義
@@ -272,12 +281,19 @@
     annotationView.canShowCallout = YES;  // この設定で吹き出しが出る
     annotationView.annotation = annotation;
     
+    
     //画像の位置を調整（左右，上下）
     annotationView.centerOffset = CGPointMake(0, -43);
 
     
     return annotationView;
+    }
 }
+
+/*******************************************************************
+                        アノテーション　おわり
+*******************************************************************/
+
 
 
 /*******************************************************
