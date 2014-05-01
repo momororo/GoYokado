@@ -39,14 +39,23 @@
 
     // ロケーションマネージャーを作成
 	self.locationManager = CLLocationManager.new;
+    
+    //　ロケーションマネージャーの利用確認
     if ([CLLocationManager locationServicesEnabled]) {
+        
+        //デリゲートを設定
 		self.locationManager.delegate = self;
+        
 		// 位置情報取得開始
 		[_locationManager startUpdatingLocation];
+        
 	}else{
+        
+        //　位置情報が使えない場合はエラーを返す
         NSLog(@"位置情報使えないよ><");
     }
     
+    //ロケーションマネージャーメソッドの起動
     [self locationManager];
 
 
@@ -88,7 +97,11 @@
     MKPointAnnotation *ann = MKPointAnnotation.new;
     ann.coordinate = latlng;
     ann.title = @"現在地";
-    [mapView removeAnnotations:mapView.annotations];          //マップ上にあるすべてのピンを削除
+    
+　　 //マップ上にあるすべてのピンを削除
+    [mapView removeAnnotations:mapView.annotations];
+    
+    //マップ上にピンを追加
     [mapView addAnnotation:ann];
     
     //緯度と経度を取得し続けるため、取得の停止
@@ -102,6 +115,8 @@
     
     // 目的地（ヨーカドー）
     CLLocationCoordinate2D toCoordinate = CLLocationCoordinate2DMake(_yokado.latitude.floatValue, _yokado.longitude.floatValue);
+    
+    //ログに緯度、経度を吐き出し（後々に削除？）
     NSLog(@"%f ,%f",_yokado.latitude.floatValue,_yokado.longitude.floatValue);
     
     // CLLocationCoordinate2D から MKPlacemark を生成
@@ -126,11 +141,16 @@
     // 経路検索を実行
     [directions calculateDirectionsWithCompletionHandler:^(MKDirectionsResponse *response, NSError *error)
      {
+         //エラーの場合は何もせずリターン
          if (error) return;
          
+         //ルート上の数の確認
          if ([response.routes count] > 0)
          {
+             //最初のルートを引っ張っているようです。
              MKRoute *route = (response.routes)[0];
+             
+             //目的地の情報をログに吐き出し（後ほど削除？）
              NSLog(@"distance: %.2f meter", route.distance);
              
              // 地図上にルートを描画
@@ -139,6 +159,8 @@
              //目的地にピンを刺す
              NSString *title = _yokado.name;
              CustomAnnotation *customAnnotation = [[CustomAnnotation alloc] initWithCoordinates:toCoordinate newTitle:title newSubTitle:nil];
+             
+             //カスタムアノテーションをaddする
              [mapView addAnnotation:customAnnotation];
              
              /*
@@ -168,6 +190,8 @@
              //謎処理
              [titleLabel sizeToFit];
              
+             
+             //ラベルを挿入する場合はtitleViewに挿入
              self.navigationItem.titleView = titleLabel;
     /*ナビゲーションバーのタイトル設定おわり*/
              

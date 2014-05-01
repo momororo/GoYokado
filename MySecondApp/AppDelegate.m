@@ -12,7 +12,11 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    
+
+/*******************************************************
+     CSVファイルからデータを引張り配列に加える処理
+ *******************************************************/
+
         
         // CSVファイルからセクションデータを取得する
         NSString *csvFile = [[NSBundle mainBundle] pathForResource:@"yokadoList" ofType:@"csv"];
@@ -48,9 +52,9 @@
             [scanner scanCharactersFromSet:chSet intoString:NULL];
     }
     
-    /*******************************************************
-     CSVファイルからデータを引っ張るメソッド　おわり
-     *******************************************************/
+/*******************************************************
+     CSVファイルからデータを引張り配列に加える処理　おわり
+ *******************************************************/
 
     
         return YES;
