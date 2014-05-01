@@ -10,15 +10,17 @@
 #import <CoreLocation/CoreLocation.h>
 #import <MapKit/MapKit.h>
 #import "Yokado.h"
+#import "AppDelegate.h"
+#import "CustomAnnotation.h"
 
 @interface MapViewController ()<CLLocationManagerDelegate>
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property (strong, nonatomic) CLLocationManager *locationManager;
-@property (strong, nonatomic) NSMutableArray    *yokadoList;
 @property (strong, nonatomic) Yokado *yokado;
 @end
 
 @implementation MapViewController
+@synthesize mapView;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -33,13 +35,7 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-
     
-    //ヨーカドーのリストを生成
-    NSMutableArray *yokadoList = [self getDataFromCSV:@"yokadoList"];
-    
-    //リストの中から1店舗の情報をランダムで取得する
-    _yokado = [self getRandomFromList:yokadoList];
 
     // ロケーションマネージャーを作成
 	self.locationManager = CLLocationManager.new;
@@ -51,9 +47,13 @@
         NSLog(@"位置情報使えないよ><");
     }
     
+    [self locationManager];
+
+
+    
 }
 
-- (void)viewDidAppear:(BOOL)animated {
+- (void)viewwillAppear:(BOOL)animated {
     
     [super viewDidAppear:animated];
 }
@@ -70,21 +70,26 @@
 //経度緯度を参照（位置情報の取得）し、目的地までのルートを表示する
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
+    
+    
+    //appデリゲートに接続
+    AppDelegate *ap = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    
+    
+    //リストの中から1店舗の情報をランダムで取得する
+    _yokado = [self getRandomFromList:ap.yokadoList];
+
     //現在の緯度と経度を取得
-    CLLocation *location = [locations objectAtIndex:(locations.count-1)];
+    CLLocation *location = locations[(locations.count-1)];
     CLLocationCoordinate2D latlng = location.coordinate;
     NSLog(@" %f , %f ",latlng.latitude,latlng.longitude);
-    
-    //500mスクウェアで領域を生成
-    MKCoordinateRegion reg = MKCoordinateRegionMakeWithDistance(latlng, 13500, 13500);
-    _mapView.region = reg;
     
     //アノテーション(ピン)を生成し、表示
     MKPointAnnotation *ann = MKPointAnnotation.new;
     ann.coordinate = latlng;
     ann.title = @"現在地";
-    [_mapView removeAnnotations:_mapView.annotations];          //マップ上にあるすべてのピンを削除
-    [_mapView addAnnotation:ann];
+    [mapView removeAnnotations:mapView.annotations];          //マップ上にあるすべてのピンを削除
+    [mapView addAnnotation:ann];
     
     //緯度と経度を取得し続けるため、取得の停止
     [self.locationManager stopUpdatingLocation];
@@ -96,7 +101,8 @@
     
     
     // 目的地（ヨーカドー）
-    CLLocationCoordinate2D toCoordinate = CLLocationCoordinate2DMake(_yokado.latitude.intValue, _yokado.longitude.intValue);
+    CLLocationCoordinate2D toCoordinate = CLLocationCoordinate2DMake(_yokado.latitude.floatValue, _yokado.longitude.floatValue);
+    NSLog(@"%f ,%f",_yokado.latitude.floatValue,_yokado.longitude.floatValue);
     
     // CLLocationCoordinate2D から MKPlacemark を生成
     MKPlacemark *fromPlacemark = [[MKPlacemark alloc] initWithCoordinate:fromCoordinate
@@ -124,17 +130,85 @@
          
          if ([response.routes count] > 0)
          {
-             MKRoute *route = [response.routes objectAtIndex:0];
+             MKRoute *route = (response.routes)[0];
              NSLog(@"distance: %.2f meter", route.distance);
              
              // 地図上にルートを描画
              [self.mapView addOverlay:route.polyline];
              
              //目的地にピンを刺す
+             NSString *title = _yokado.name;
+             CustomAnnotation *customAnnotation = [[CustomAnnotation alloc] initWithCoordinates:toCoordinate newTitle:title newSubTitle:nil];
+             [mapView addAnnotation:customAnnotation];
+             
+             /*
              MKPointAnnotation *spot = MKPointAnnotation.new;
              spot.coordinate = toCoordinate;
              spot.title = _yokado.name;
-             [_mapView addAnnotation:spot];
+             [_mapView addAnnotation:spot];*/
+             
+
+             
+    /*ナビゲーションバーのタイトルの設定
+       細かい設定が可能なようです。*/
+             //ナビゲーションバーに距離と目的地を表示
+             NSString *distance = [NSString stringWithFormat:@"約%.0f km",route.distance/1000];
+             
+             UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectZero];
+             //文の設定
+             titleLabel.text = [NSString stringWithFormat:@"%@ %@",_yokado.address,distance];
+             //フォントの設定
+             titleLabel.font = [UIFont fontWithName:@"HiraMaruPro-W4" size:18];
+             //背景色
+             titleLabel.backgroundColor = [UIColor clearColor];
+             //文字の色
+             titleLabel.textColor = [UIColor blackColor];
+             //位置の設定
+             titleLabel.textAlignment = NSTextAlignmentCenter;
+             //謎処理
+             [titleLabel sizeToFit];
+             
+             self.navigationItem.titleView = titleLabel;
+    /*ナビゲーションバーのタイトル設定おわり*/
+             
+             
+             
+             
+             //ピンの表示領域の設定
+             double minLat = 9999.0;
+             double minLng = 9999.0;
+             double maxLat = -9999.0;
+             double maxLng = -9999.0;
+             double lat, lng;
+             for (id<MKAnnotation> annotation in mapView.annotations){
+                 lat = annotation.coordinate.latitude;
+                 lng = annotation.coordinate.longitude;
+                 //緯度の最大最小を求める
+                 if(minLat > lat)
+                     minLat = lat;
+                 if(lat > maxLat)
+                     maxLat = lat;
+                 
+                 //経度の最大最小を求める
+                 if(minLng > lng)
+                     minLng = lng;
+                 if(lng > maxLng)
+                     maxLng = lng;
+             }
+             CLLocationCoordinate2D center = CLLocationCoordinate2DMake((maxLat + minLat) / 2.0, (maxLng + minLng) / 2.0);
+             MKCoordinateSpan span = MKCoordinateSpanMake((maxLat - minLat) * 2, (maxLng - minLng) * 2);
+             MKCoordinateRegion region = MKCoordinateRegionMake(center, span);
+             [mapView setRegion:[mapView regionThatFits:region] animated:YES];
+             
+             
+             
+             
+             [self.view addSubview:self.mapView];
+             
+             
+             
+             
+             
          }
      }];
 }
@@ -186,61 +260,30 @@
 
 
 
+#pragma - mapkit delegate
 
-
-
-/*******************************************************
- CSVファイルからデータを引っ張るメソッド
- http://snippets.feb19.jp/?p=942
- から取得
- 
- 引数にファイルネームを指定すると
- csvを配列形式で返してくれるようである。
-*******************************************************/
-- (NSMutableArray *)getDataFromCSV:(NSString *)csvFileName
+- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation
 {
+	MKAnnotationView *annotationView;
     
-
-    // CSVファイルからセクションデータを取得する
-    NSString *csvFile = [[NSBundle mainBundle] pathForResource:csvFileName ofType:@"csv"];
-    NSLog(@"%@",csvFile);
-    NSData *csvData = [NSData dataWithContentsOfFile:csvFile];
-    NSString *csv = [[NSString alloc] initWithData:csvData encoding:NSUTF8StringEncoding];
+    // 再利用可能なannotationがあるかどうかを判断するための識別子を定義
+    NSString *identifier = @"Pin";
     
-    NSScanner *scanner = [NSScanner scannerWithString:csv];
-
-    // 改行文字の選定
-    NSCharacterSet *chSet = [NSCharacterSet newlineCharacterSet];
-    NSString *line;
+    // "Pin"という識別子のついたannotationを使いまわせるかチェック
+    annotationView = (MKAnnotationView*)[self.mapView dequeueReusableAnnotationViewWithIdentifier:identifier];
     
-    // レコードを入れる NSMutableArray
-    NSMutableArray *yokadoList = [NSMutableArray array];
-    
-    while (![scanner isAtEnd]) {
-        
-        // 一行づつ読み込んでいく
-        [scanner scanUpToCharactersFromSet:chSet intoString:&line];
-        NSArray *array = [line componentsSeparatedByString:@","];
-        
-        //ヨーカドーオブジェクトに挿入
-        Yokado *yokado = [Yokado new];
-        yokado.name = array[0];
-        yokado.address = array[1];
-        yokado.latitude = array[2];
-        yokado.longitude = array[3];
-        
-        [yokadoList addObject:yokado];
-        
-        // 改行文字をスキップ
-        [scanner scanCharactersFromSet:chSet intoString:NULL];
+    // 使い回しができるannotationがない場合、annotationの初期化
+    if(annotationView == nil) {
+        annotationView = [[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:identifier];
     }
-    return yokadoList;
+    
+    // 画像をannotationに設定設定
+    annotationView.image = [UIImage imageNamed:@"flag.png"];
+    annotationView.canShowCallout = YES;  // この設定で吹き出しが出る
+    annotationView.annotation = annotation;
+    
+    return annotationView;
 }
-
-/*******************************************************
- CSVファイルからデータを引っ張るメソッド　おわり
-*******************************************************/
-
 
 
 /*******************************************************
