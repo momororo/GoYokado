@@ -95,57 +95,55 @@
     [self.locationManager stopUpdatingLocation];
     
     
-//経路表示
-    // 現在地
-    CLLocationCoordinate2D fromCoordinate = CLLocationCoordinate2DMake(latlng.latitude, latlng.longitude);
+    /* 経路を表示する設定 */
+            // 現在地
+            CLLocationCoordinate2D fromCoordinate = CLLocationCoordinate2DMake(latlng.latitude, latlng.longitude);
     
+            // 目的地（ヨーカドー）
+            CLLocationCoordinate2D toCoordinate = CLLocationCoordinate2DMake(_yokado.latitude.floatValue, _yokado.longitude.floatValue);
+            NSLog(@"%f ,%f",_yokado.latitude.floatValue,_yokado.longitude.floatValue);
     
-    // 目的地（ヨーカドー）
-    CLLocationCoordinate2D toCoordinate = CLLocationCoordinate2DMake(_yokado.latitude.floatValue, _yokado.longitude.floatValue);
-    NSLog(@"%f ,%f",_yokado.latitude.floatValue,_yokado.longitude.floatValue);
+            // CLLocationCoordinate2D から MKPlacemark を生成
+            MKPlacemark *fromPlacemark = [[MKPlacemark alloc] initWithCoordinate:fromCoordinate
+                                                                addressDictionary:nil];
+            MKPlacemark *toPlacemark   = [[MKPlacemark alloc] initWithCoordinate:toCoordinate
+                                                                addressDictionary:nil];
     
-    // CLLocationCoordinate2D から MKPlacemark を生成
-    MKPlacemark *fromPlacemark = [[MKPlacemark alloc] initWithCoordinate:fromCoordinate
-                                                       addressDictionary:nil];
-    MKPlacemark *toPlacemark   = [[MKPlacemark alloc] initWithCoordinate:toCoordinate
-                                                       addressDictionary:nil];
+            // MKPlacemark から MKMapItem を生成
+            MKMapItem *fromItem = [[MKMapItem alloc] initWithPlacemark:fromPlacemark];
+            MKMapItem *toItem   = [[MKMapItem alloc] initWithPlacemark:toPlacemark];
     
-    // MKPlacemark から MKMapItem を生成
-    MKMapItem *fromItem = [[MKMapItem alloc] initWithPlacemark:fromPlacemark];
-    MKMapItem *toItem   = [[MKMapItem alloc] initWithPlacemark:toPlacemark];
+            // MKMapItem をセットして MKDirectionsRequest を生成
+            MKDirectionsRequest *request = MKDirectionsRequest.new;
+            request.source = fromItem;
+            request.destination = toItem;
+            request.requestsAlternateRoutes = YES;
     
-    // MKMapItem をセットして MKDirectionsRequest を生成
-    MKDirectionsRequest *request = MKDirectionsRequest.new;
-    request.source = fromItem;
-    request.destination = toItem;
-    request.requestsAlternateRoutes = YES;
+            // MKDirectionsRequest から MKDirections を生成
+            MKDirections *directions = [[MKDirections alloc] initWithRequest:request];
     
-    // MKDirectionsRequest から MKDirections を生成
-    MKDirections *directions = [[MKDirections alloc] initWithRequest:request];
-    
-    // 経路検索を実行
-    [directions calculateDirectionsWithCompletionHandler:^(MKDirectionsResponse *response, NSError *error)
-     {
-         if (error) return;
+            // 経路検索を実行
+            [directions calculateDirectionsWithCompletionHandler:^(MKDirectionsResponse *response, NSError *error)
+                {
+                        if (error) return;
          
-         if ([response.routes count] > 0)
-         {
-             MKRoute *route = (response.routes)[0];
-             NSLog(@"distance: %.2f meter", route.distance);
+                        if ([response.routes count] > 0)
+                            {
+                                    MKRoute *route = (response.routes)[0];
+                                    NSLog(@"distance: %.2f meter", route.distance);
              
-             // 地図上にルートを描画
+            // 地図上にルートを描画
              [self.mapView addOverlay:route.polyline];
              
-             //目的地にピンを刺す
+            //目的地にピンを刺す
              NSString *title = _yokado.name;
+            
+            //CustomAnnotationクラスの初期化
              CustomAnnotation *customAnnotation = [[CustomAnnotation alloc] initWithCoordinates:toCoordinate newTitle:title newSubTitle:nil];
+            
+            //annotationをマップに追加
              [mapView addAnnotation:customAnnotation];
-             
-             /*
-             MKPointAnnotation *spot = MKPointAnnotation.new;
-             spot.coordinate = toCoordinate;
-             spot.title = _yokado.name;
-             [_mapView addAnnotation:spot];*/
+    /* 経路を表示する設定　おわり */
              
 
              
@@ -172,9 +170,7 @@
     /*ナビゲーションバーのタイトル設定おわり*/
              
              
-             
-             
-             //ピンの表示領域の設定
+    /*ピンの表示領域の設定*/
              double minLat = 9999.0;
              double minLng = 9999.0;
              double maxLat = -9999.0;
@@ -196,19 +192,13 @@
                      maxLng = lng;
              }
              CLLocationCoordinate2D center = CLLocationCoordinate2DMake((maxLat + minLat) / 2.0, (maxLng + minLng) / 2.0);
-             MKCoordinateSpan span = MKCoordinateSpanMake((maxLat - minLat) * 2, (maxLng - minLng) * 2);
+             MKCoordinateSpan span = MKCoordinateSpanMake((maxLat - minLat) * 2, (maxLng - minLng) * 2);    //左式の数値で変更可
              MKCoordinateRegion region = MKCoordinateRegionMake(center, span);
              [mapView setRegion:[mapView regionThatFits:region] animated:YES];
              
-             
-             
-             
+                //地図に設定した内容を表示する
              [self.view addSubview:self.mapView];
-             
-             
-             
-             
-             
+    /*ピンの表示領域の設定おわり*/
          }
      }];
 }
@@ -281,6 +271,10 @@
     annotationView.image = [UIImage imageNamed:@"flag.png"];
     annotationView.canShowCallout = YES;  // この設定で吹き出しが出る
     annotationView.annotation = annotation;
+    
+    //画像の位置を調整（左右，上下）
+    annotationView.centerOffset = CGPointMake(0, -43);
+
     
     return annotationView;
 }
