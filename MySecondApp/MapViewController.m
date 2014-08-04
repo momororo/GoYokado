@@ -13,6 +13,8 @@
 #import "AppDelegate.h"
 #import "CustomAnnotation.h"
 
+BOOL mapFlag;
+
 @interface MapViewController ()<CLLocationManagerDelegate>
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property (strong, nonatomic) CLLocationManager *locationManager;
@@ -57,6 +59,7 @@
     
     mapView.showsUserLocation = YES;
     mapView.userLocation.title = @"現在地";
+    mapFlag = YES;
     
     //ロケーションマネージャーメソッドの起動
     [self locationManager];
@@ -85,6 +88,8 @@
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
     
+    if (mapFlag == YES) {
+        mapFlag = NO;
     
     //appデリゲートに接続
     AppDelegate *ap = (AppDelegate *)[[UIApplication sharedApplication] delegate];
@@ -220,6 +225,7 @@
              
          }
      }];
+    }
 }
 
 
@@ -271,34 +277,29 @@
 
 #pragma - mapkit delegate
 
-- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation
-{
+// ViewController.mファイル内にviewForAnnotation関数を記述
+-(MKAnnotationView*)mapView:(MKMapView*)_mapView viewForAnnotation:(id <MKAnnotation>)annotation {
+    // ①ユーザの現在地はデフォルトの青丸マークを使いたいのでreturn: nil
     if (annotation == mapView.userLocation) {
         return nil;
+    } else {
+        MKAnnotationView *annotationView;
+        // ②再利用可能なannotationがあるかどうかを判断するための識別子を定義
+        NSString* identifier = @"Pin";
+        // ③dequeueReusableAnnotationViewWithIdentifierで"Pin"という識別子の使いまわせるannotationがあるかチェック
+        annotationView = (MKAnnotationView*)[mapView dequeueReusableAnnotationViewWithIdentifier:identifier];
+        // ④使い回しができるannotationがない場合、annotationの初期化
+        if(annotationView == nil) {
+            annotationView = [[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:identifier];
+        }
+        // ⑤好きな画像をannotationとして設定
+        annotationView.image = [UIImage imageNamed:@"flag.png"];
+        annotationView.canShowCallout = YES;  // この設定で吹き出しが出る
+        annotationView.annotation = annotation;
+        annotationView.centerOffset = CGPointMake(0, -43);
+        return annotationView;
     }
-	MKAnnotationView *annotationView;
-    
-    // 再利用可能なannotationがあるかどうかを判断するための識別子を定義
-    NSString *identifier = @"Pin";
-    
-    // "Pin"という識別子のついたannotationを使いまわせるかチェック
-    annotationView = (MKAnnotationView*)[self.mapView dequeueReusableAnnotationViewWithIdentifier:identifier];
-    
-    // 使い回しができるannotationがない場合、annotationの初期化
-    if(annotationView == nil) {
-        annotationView = [[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:identifier];
-    }
-    
-    // 画像をannotationに設定設定
-    annotationView.image = [UIImage imageNamed:@"flag.png"];
-    annotationView.canShowCallout = YES;  // この設定で吹き出しが出る
-    annotationView.annotation = annotation;
-    annotationView.centerOffset = CGPointMake(0, -43);
-
-    
-    return annotationView;
 }
-
 
 /*******************************************************
  引数のyokadoListからランダムに選ぶメソッド

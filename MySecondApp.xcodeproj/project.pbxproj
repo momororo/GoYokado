@@ -25,10 +25,10 @@
 		A4231C9318E1C8FA00F4DEDE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A4231C9118E1C8FA00F4DEDE /* InfoPlist.strings */; };
 		A4231C9518E1C8FA00F4DEDE /* MySecondAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A4231C9418E1C8FA00F4DEDE /* MySecondAppTests.m */; };
 		A4231CA318E1CF2000F4DEDE /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4231CA218E1CF2000F4DEDE /* MapKit.framework */; };
+		A42F3691198F31CB003B2FD4 /* flag.png in Resources */ = {isa = PBXBuildFile; fileRef = A42F3690198F31CB003B2FD4 /* flag.png */; };
 		A438B7C6190A3E400009A5E2 /* yokado_logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A438B7C4190A3E400009A5E2 /* yokado_logo.jpg */; };
 		A438B7C7190A3E400009A5E2 /* tap_yokado_logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A438B7C5190A3E400009A5E2 /* tap_yokado_logo.jpg */; };
 		A4E0C6611912264700C64216 /* CustomAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = A4E0C6601912264700C64216 /* CustomAnnotation.m */; };
-		A4E0C66319122E2500C64216 /* flag.png in Resources */ = {isa = PBXBuildFile; fileRef = A4E0C66219122E2500C64216 /* flag.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,11 +67,11 @@
 		A4231C9218E1C8FA00F4DEDE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		A4231C9418E1C8FA00F4DEDE /* MySecondAppTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MySecondAppTests.m; sourceTree = "<group>"; };
 		A4231CA218E1CF2000F4DEDE /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		A42F3690198F31CB003B2FD4 /* flag.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = flag.png; sourceTree = "<group>"; };
 		A438B7C4190A3E400009A5E2 /* yokado_logo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = yokado_logo.jpg; sourceTree = "<group>"; };
 		A438B7C5190A3E400009A5E2 /* tap_yokado_logo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = tap_yokado_logo.jpg; sourceTree = "<group>"; };
 		A4E0C65F1912264700C64216 /* CustomAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomAnnotation.h; sourceTree = "<group>"; };
 		A4E0C6601912264700C64216 /* CustomAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomAnnotation.m; sourceTree = "<group>"; };
-		A4E0C66219122E2500C64216 /* flag.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = flag.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -136,7 +136,7 @@
 				04ACB1431910E9DD001231BF /* yokadoList.csv */,
 				046081FF190E572100266ACA /* Yokado.h */,
 				04608200190E572100266ACA /* Yokado.m */,
-				A4E0C66219122E2500C64216 /* flag.png */,
+				A42F3690198F31CB003B2FD4 /* flag.png */,
 				A438B7C4190A3E400009A5E2 /* yokado_logo.jpg */,
 				A438B7C5190A3E400009A5E2 /* tap_yokado_logo.jpg */,
 				A4231C7818E1C8FA00F4DEDE /* AppDelegate.h */,
@@ -269,7 +269,7 @@
 				04ACB1441910E9DD001231BF /* yokadoList.csv in Resources */,
 				A4231C8218E1C8FA00F4DEDE /* Images.xcassets in Resources */,
 				A438B7C6190A3E400009A5E2 /* yokado_logo.jpg in Resources */,
-				A4E0C66319122E2500C64216 /* flag.png in Resources */,
+				A42F3691198F31CB003B2FD4 /* flag.png in Resources */,
 				A4231C7418E1C8FA00F4DEDE /* InfoPlist.strings in Resources */,
 				A4231C7D18E1C8FA00F4DEDE /* Main.storyboard in Resources */,
 				A438B7C7190A3E400009A5E2 /* tap_yokado_logo.jpg in Resources */,
